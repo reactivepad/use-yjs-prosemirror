@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+export * as actions from "./actions";
 export * as yjsCommands from "./commands";
 export * as commandsTrackChanges from "./commandsTrackChanges";
 export * from "./generate";
-
 export { yjsExtension } from "./extension";
 export { useYjsExtension } from "./useYjsExtension";
-
+export * from "./snapshots";
+export * from "./utils";
 export * from "./types";
