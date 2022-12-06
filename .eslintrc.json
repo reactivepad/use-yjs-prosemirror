@@ -1,0 +1,29 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "@manuscripts/eslint-config"
+  ],
+  "rules": {
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "import/no-named-as-default": "off",
+    "import/no-named-as-default-member": "off",
+    "simple-import-sort/sort": "warn",
+    "promise/always-return": "off",
+    "promise/no-nesting": "off",
+    "promise/no-promise-in-callback": "off",
+    "react/no-deprecated": "off",
+    "jsx-a11y/no-autofocus": "off",
+    "jsx-a11y/no-onchange": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
+  }
+}
