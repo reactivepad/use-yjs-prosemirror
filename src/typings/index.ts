@@ -13,15 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useLayoutEffect, useEffect } from "react";
-
-export function uuidv4() {
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-    const r = (Math.random() * 16) | 0,
-      v = c == "x" ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
-}
-
-export const useSSRLayoutEffect =
-  typeof window !== "undefined" ? useLayoutEffect : useEffect;
+export * from "./editor";
+export * from "./extension";
+export * from "./utils";

@@ -15,13 +15,14 @@
  */
 import { WebsocketProvider } from "y-websocket";
 import { Doc } from "yjs";
-import { EditorState, Transaction } from "prosemirror-state";
+import { EditorState, Transaction, PluginKey } from "prosemirror-state";
+import { EditorView } from "prosemirror-view";
+export const yjsExtensionName = "yjs" as const;
 
+import type { Command } from "./typings";
 import type { yjsExtension } from "./extension";
 import type { createYjsStore } from "./store";
-import { EditorView } from "prosemirror-view";
-
-export const yjsExtensionName = "yjs" as const;
+import { Observable } from "./Observable";
 
 export type YjsExtension = ReturnType<ReturnType<typeof yjsExtension>>;
 export type YjsOptions = {
@@ -37,16 +38,19 @@ export type YjsOptions = {
 };
 
 export type YjsStore = ReturnType<typeof createYjsStore>;
+
 export interface YjsExtensionState {
   snapshots: YjsSnapshot[];
   selectedSnapshot: YjsSnapshot | null;
   currentUser: YjsUser;
   usersMap: Map<number, YjsUser>;
 }
+
 export enum YjsStatus {
   enabled = "enabled",
   disabled = "disabled",
 }
+
 export interface YjsUser {
   id: string;
   clientID: number;
@@ -67,19 +71,16 @@ export type AwarenessChange = {
   removed: number[];
 };
 
-export type Commands = { [name: string]: (...args: any[]) => Command };
-export type CommandDispatch = (tr: Transaction) => void;
-export type Command = (
-  state: EditorState,
-  dispatch?: CommandDispatch,
-  view?: EditorView
-) => boolean;
-
 export class EditorViewProvider {
   state?: EditorState;
   execCommand(applyAndRemoveChanges: Command) {}
+
+  updateState(state: EditorState) {}
+
+  init(view: EditorView) {}
 }
 export class ExtensionProvider {
+  plugins: any;
   getExtension(yjsExtensionName: "yjs") {
     return undefined;
   }
@@ -98,8 +99,26 @@ export class ExtensionProvider {
   ) {}
 
   offUpdate(updateStoreCb: (provider: ExtensionProvider) => void) {}
+
+  destroy() {
+    return false;
+  }
+
+  init(ctx: EditorProviders, param2: any) {}
 }
-export class PluginStateProvider {}
+
+export declare class PluginStateProvider {
+  _observable: Observable<PluginKey<any>>;
+  viewProvider: EditorViewProvider;
+  constructor(viewProvider: EditorViewProvider);
+  getPluginState(p: PluginKey): any;
+  updatePluginListeners(
+    oldEditorState: EditorState,
+    newEditorState: EditorState
+  ): void;
+  on(pluginKey: PluginKey, cb: (data: any) => void): void;
+  off(pluginKey: PluginKey, cb: (data: any) => void): void;
+}
 
 export const emptyProviders = {
   viewProvider: undefined,
@@ -114,19 +133,6 @@ export interface EditorProviders {
 }
 
 export type EditorContext = EditorProviders | typeof emptyProviders;
-
-export declare type CreateExtensionFn = (
-  ...args: any[]
-) => (ctx: EditorProviders) => Extension;
-export declare type CreateExtension = (ctx: EditorProviders) => Extension;
-export declare type Extension = {
-  name: string;
-  commands?: Commands;
-  keymaps?: unknown[];
-  plugins?: Plugin[];
-  store?: Record<string, any>;
-  onDestroy?: () => void;
-};
 
 export declare const applyAndRemoveChanges: () => Command;
 

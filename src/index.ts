@@ -16,9 +16,15 @@
 export * as actions from "./actions";
 export * as yjsCommands from "./commands";
 export * as commandsTrackChanges from "./commandsTrackChanges";
+export * as popper from "./popper";
 export * from "./generate";
 export { yjsExtension } from "./extension";
 export { useYjsExtension } from "./useYjsExtension";
 export * from "./snapshots";
 export * from "./utils";
 export * from "./types";
+export * as Observable from "./Observable";
+
+export * from "./typings/editor";
+export * from "./typings/extension";
+export * from "./typings/utils";

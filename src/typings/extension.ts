@@ -13,15 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useLayoutEffect, useEffect } from "react";
+import type { Plugin } from "prosemirror-state";
 
-export function uuidv4() {
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-    const r = (Math.random() * 16) | 0,
-      v = c == "x" ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
-}
+import type { EditorProviders } from "../types";
+import type { Commands } from "./editor";
 
-export const useSSRLayoutEffect =
-  typeof window !== "undefined" ? useLayoutEffect : useEffect;
+export type CreateExtensionFn = (
+  ...args: any[]
+) => (ctx: EditorProviders) => Extension;
+export type CreateExtension = (ctx: EditorProviders) => Extension;
+export type Extension = {
+  name: string;
+  commands?: Commands;
+  keymaps?: any[];
+  plugins?: Plugin[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  store?: Record<string, any>;
+  onDestroy?: () => void;
+};

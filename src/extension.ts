@@ -24,12 +24,8 @@ import {
 
 import * as commands from "./commands";
 import { createYjsStore } from "./store";
-import {
-  CreateExtensionFn,
-  EditorProviders,
-  yjsExtensionName,
-  YjsOptions,
-} from "./types";
+import { CreateExtensionFn } from "./typings";
+import { EditorProviders, yjsExtensionName, YjsOptions } from "./types";
 
 // @ts-ignore
 export const yjsExtension = (opts: YjsOptions) => (ctx: EditorProviders) => {

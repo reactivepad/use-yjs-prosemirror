@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { useEffect, useRef, useState } from "react";
-import { useEditorContext } from "./utils";
+import { useEditorContext } from "./editor";
 
 import {
   ExtensionProvider,
